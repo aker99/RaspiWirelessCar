@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Car Controller</title>
+</head>
+<body>
+	<center>
+		<button onclick="send('forward')">Forward</button>
+		<br><br>
+		<button onclick="send('left')">Left</button>
+		<button onclick="send('backward')">Backward</button>
+		<button onclick="send('right')">Right</button>
+		<br><br>
+		<button onclick="send('stop')">stop</button>
+	</center>
+</body>
+<script type="text/javascript">
+	function send(e){
+		fetch('http://0.0.0.0:5000/'+e).then(data=>{
+			console.log(data);
+		})
+	}
+</script>
+</html>
