@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head> <link href="//amp.azure.net/libs/amp/latest/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+<script src= "//amp.azure.net/libs/amp/latest/azuremediaplayer.min.js"></script>
 	<title>Car Controller</title>
 </head>
-<body>
+<body  >
 	<center>
+		<h1>Adaptive Streaming with HTML5</h1>
+        <video id="vid1" class="azuremediaplayer amp-default-skin" autoplay controls width="640" height="400" poster="poster.jpg" data-setup='{"nativeControlsForTouch": false}'>
+		    <source src="http://ankitproject-aase.streaming.media.azure.net/346775f8-5b0d-4753-be25-5d61185571b1/46996c6b-729e-4c95-b6de-448a6b30806a.ism/manifest" />
+		    <p class="amp-no-js">
+		        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+		    </p>
+		</video>
+        <br><br>
 		<button onclick="send('forward')">Forward</button>
 		<br><br>
 		<button onclick="send('left')">Left</button>
@@ -14,9 +23,28 @@
 		<button onclick="send('stop')">stop</button>
 	</center>
 </body>
-<script type="text/javascript">
+<script>
+	var myPlayer = amp('vid1', { /* Options */
+        "nativeControlsForTouch": false,
+        autoplay: false,
+        controls: true,
+        width: "640",
+        height: "400",
+        poster: ""
+    }, function() {
+          console.log('Good to go!');
+           // add an event listener
+          this.addEventListener('ended', function() {
+            console.log('Finished!');
+        }
+      }
+);
+myPlayer.src([{
+    src: "http://ankitproject-aase.streaming.media.azure.net/346775f8-5b0d-4753-be25-5d61185571b1/46996c6b-729e-4c95-b6de-448a6b30806a.ism/manifest",
+    type: "application/vnd.ms-sstr+xml"
+}]);
 	function send(e){
-		fetch('http://0.0.0.0:5000/'+e).then(data=>{
+		fetch('http://{{localip}}:5000/'+e).then(data=>{
 			console.log(data);
 		})
 	}
